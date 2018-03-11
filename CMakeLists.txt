@@ -6,4 +6,9 @@ add_library(native-backend SHARED header/native-backend/parser/parser.h header/n
 include_directories(native-backend header)
 
 add_subdirectory(tests/parser/parser)
-add_subdirectory(tests/server/server)
+add_subdirectory(tests/server/Server)
+add_subdirectory(tests/db/DataBaseRecord)
+add_subdirectory(tests/controller/Controller)
+add_subdirectory(tests/widget/Widget)
+add_subdirectory(tests/routing/Root)
+add_subdirectory(tests/packaging/Bundle)
