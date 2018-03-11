@@ -1,3 +1,6 @@
+# Compiled documentation
+docs/*
+
 # Prerequisites
 *.d
 
