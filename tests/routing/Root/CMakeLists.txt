@@ -1,8 +1,8 @@
 project(routing_Root_tests)
 cmake_minimum_required(VERSION 3.0)
 
-set(Boost_ADDITIONAL_VERSIONS "1.64" "1.64.0")
-find_package(Boost 1.64 REQUIRED COMPONENTS unit_test_framework)
+set(Boost_ADDITIONAL_VERSIONS "1.66" "1.66.0")
+find_package(Boost 1.66 REQUIRED COMPONENTS unit_test_framework)
 
 add_executable(routing_Root_tests_test_executable tests.cpp)
 target_include_directories(routing_Root_tests_test_executable PRIVATE ${Boost_INCLUDE_DIRS})
