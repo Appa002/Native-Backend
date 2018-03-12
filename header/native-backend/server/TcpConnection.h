@@ -14,6 +14,9 @@
 using boost::asio::ip::tcp;
 
 namespace native_backend{
+
+    /*!\brief Class for handling tcp/http traffic.
+     * This class actually pareses the request of the client to respond accordingly.*/
     class TcpConnection :
             public boost::enable_shared_from_this<TcpConnection> {
     public:
@@ -26,15 +29,15 @@ namespace native_backend{
 
 
     private:
-        boost::shared_ptr<TcpConnection> shared_ptr_to_this;
-        boost::asio::streambuf request_buffer;
+        boost::shared_ptr<TcpConnection> shared_ptr_to_this_;
+        boost::asio::streambuf request_buffer_;
+        tcp::socket socket_;
 
         explicit TcpConnection(boost::asio::io_context& io_context);
 
         void onResponded(const boost::system::error_code &, size_t);
         void onRequestRead(const boost::system::error_code &, size_t);
 
-        tcp::socket socket_;
     };
 
 }

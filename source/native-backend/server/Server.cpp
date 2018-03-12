@@ -11,6 +11,9 @@ native_backend::Server::Server(unsigned short port, boost::asio::io_context& io_
     start_accept();
 }
 
+/*!\brief Sets up all objects to receive incoming http/tcp traffic.
+ * Creates a instance of TcpConnection which will handle requests.
+ * Binds the Server::handle_accept function to be called when a client connects.*/
 void native_backend::Server::start_accept() {
     TcpConnection::shared_ptr_t new_connection =
             TcpConnection::create(acceptor.get_executor().context());
@@ -20,15 +23,22 @@ void native_backend::Server::start_accept() {
                                        boost::asio::placeholders::error));
 }
 
+/*!\breif Tells the TcpConnection object to handle the incoming request.
+ * Called by Server::start_accept when a new client connects.
+ * It also calls start_accept to make it listen for new clients.*/
 void native_backend::Server::handle_accept(TcpConnection::shared_ptr_t new_connection,
                                            const boost::system::error_code& error) {
-
     if(!error){
         new_connection->start();
     }
-
     start_accept();
-
 }
 
-
+/*!\brief Creates a new server and makes it listen.
+ * Returns that sever as a boost unique_ptr*/
+boost::movelib::unique_ptr<native_backend::Server> native_backend::Server::create(unsigned short port) {
+    boost::asio::io_context io_context;
+    boost::movelib::unique_ptr<Server> server (new Server(port, io_context));
+    io_context.run();
+    return server;
+}
