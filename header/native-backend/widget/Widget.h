@@ -5,10 +5,11 @@
 #ifndef NATIVE_BACKEND_WIDGET_H
 #define NATIVE_BACKEND_WIDGET_H
 
+namespace native_backend{
+    class Widget {
 
-class Widget {
-
-};
+    };
+}
 
 
 #endif //NATIVE_BACKEND_WIDGET_H
