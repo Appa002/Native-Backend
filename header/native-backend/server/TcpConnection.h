@@ -37,7 +37,7 @@ namespace native_backend{
 
         void onResponded(const boost::system::error_code &, size_t);
         void onRequestRead(const boost::system::error_code &, size_t);
-
+        std::string createResponse(std::string request);
     };
 
 }
