@@ -6,9 +6,11 @@
 #define NATIVE_BACKEND_CONTROLLER_H
 
 
-class Controller {
+namespace native_backend{
+    class Controller {
 
-};
+    };
+}
 
 
 #endif //NATIVE_BACKEND_CONTROLLER_H
