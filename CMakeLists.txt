@@ -23,12 +23,17 @@ target_link_libraries(native-backend ${Boost_THREAD_LIBRARY})
 
 
 add_subdirectory(tests/parser/parser)
+
 add_subdirectory(tests/server/Server)
 add_subdirectory(tests/server/TcpConnection)
-add_subdirectory(tests/packaging/Bundle)
-add_subdirectory(tests/db/DataBaseRecord)
-add_subdirectory(tests/controller/Controller)
-add_subdirectory(tests/widget/Widget)
-add_subdirectory(tests/utils/Singleton)
-add_subdirectory(tests/routing/Router)
+add_subdirectory(tests/server/RequestInformation)
 
+add_subdirectory(tests/packaging/Bundle)
+
+add_subdirectory(tests/db/DataBaseRecord)
+
+add_subdirectory(tests/widget/Widget)
+
+add_subdirectory(tests/utils/Singleton)
+
+add_subdirectory(tests/routing/Router)
