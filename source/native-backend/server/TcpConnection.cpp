@@ -63,7 +63,7 @@ void native_backend::TcpConnection::onRequestRead(const boost::system::error_cod
  * The request gets passed to the Routs singleton*/
 std::string native_backend::TcpConnection::createResponse(std::string request) {
     if(request == "TEST TEST TEST\n"){
-        return "ONLINE";
+        return "ONLINE\n";
     }
 
     /*TODO: Get routes from routing*/
