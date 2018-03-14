@@ -15,7 +15,7 @@
 
 using boost::asio::ip::tcp;
 
-namespace native_backend {
+namespace nvb {
     /*!\brief Class which listens for incoming tcp/http traffic.
      * Does not handle parsing or responding to requests.*/
 

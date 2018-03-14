@@ -18,7 +18,7 @@
 };
 
 
-namespace native_backend {
+namespace nvb {
     ADD_ERROR(invalid_route_error)
 }
 

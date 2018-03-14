@@ -15,7 +15,7 @@ BOOST_AUTO_TEST_SUITE(server_Server_tests)
 
     BOOST_AUTO_TEST_CASE(server_existents_check) {
         boost::thread t([]() {
-            native_backend::Server::create(8080);
+            nvb::Server::create(8080);
         });
         /*TODO: Find way to make a tcp request and check the servers response. Similar to how netcat works in bash*/
         t.interrupt();

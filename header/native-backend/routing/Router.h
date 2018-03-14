@@ -12,15 +12,15 @@
 #include <unordered_map>
 #include <boost/move/unique_ptr.hpp>
 #include <native-backend/widget/Widget.h>
-#include <native-backend/controller/Controller.h>
+#include <native-backend/server/RequestInfomration.h>
 
-namespace native_backend{
+namespace nvb{
     /*!\brief Used to map functions to certain http requests.*/
     class Router : public Singleton<Router> {
     public:
-        Router(){}
+        Router() = default;
         void addRoute(HttpVerb verb, std::string path, std::function<boost::movelib::unique_ptr<Widget>(void)> builder);
-        boost::movelib::unique_ptr<Widget> evalulateRoute(HttpVerb verb, std::string path);
+        boost::movelib::unique_ptr<Widget> evaluateRoute(HttpVerb verb, std::string path);
     private:
         /*!\brief Member for saving routes.
         Example usage: The path is '/user/index', the http verb is get

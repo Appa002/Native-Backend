@@ -6,9 +6,12 @@
 #define NATIVE_BACKEND_DATABASERECORD_H
 
 
-class DataBaseRecord {
+namespace nvb{
+    class DataBaseRecord {
 
-};
+    };
+}
+
 
 
 #endif //NATIVE_BACKEND_DATABASERECORD_H

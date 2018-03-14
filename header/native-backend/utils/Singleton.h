@@ -7,7 +7,7 @@
 
 #include <boost/shared_ptr.hpp>
 
-namespace native_backend{
+namespace nvb{
     template <class T>
     class Singleton {
     public:
@@ -23,6 +23,6 @@ namespace native_backend{
 
 template <class T>
 boost::shared_ptr<T>
-        native_backend::Singleton<T>::shared_instance = boost::shared_ptr<T>();
+        nvb::Singleton<T>::shared_instance = boost::shared_ptr<T>();
 
 #endif //NATIVE_BACKEND_SINGLETON_H

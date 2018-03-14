@@ -5,7 +5,7 @@
 #ifndef NATIVE_BACKEND_WIDGET_H
 #define NATIVE_BACKEND_WIDGET_H
 
-namespace native_backend{
+namespace nvb{
     class Widget {
 
     };

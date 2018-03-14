@@ -7,7 +7,7 @@
 
 #include <native-backend/utils/utils.h>
 
-namespace native_backend{
+namespace nvb{
     enum class HttpVerb{
         get,
         post

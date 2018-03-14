@@ -2,16 +2,15 @@
 
 #include <boost/test/unit_test.hpp>
 #include <native-backend/routing/Router.h>
-#include <native-backend/server/HttpVerb.h>
 #include <native-backend/errors/errors.h>
 #include <iostream>
 
 BOOST_AUTO_TEST_SUITE(routing_Router_tests)
 
     BOOST_AUTO_TEST_CASE( incorrect_route_test ) {
-        using namespace native_backend;
+        using namespace nvb;
         try{
-            Router::getInstance()->evalulateRoute(HttpVerb::get, "/i/dont/exist");
+            Router::getInstance()->evaluateRoute(HttpVerb::get, "/i/dont/exist");
         }catch(invalid_route_error e){
             BOOST_ASSERT(true);
             return;
@@ -20,14 +19,14 @@ BOOST_AUTO_TEST_SUITE(routing_Router_tests)
     }
 
     BOOST_AUTO_TEST_CASE( incorrect_http_verb_test ) {
-        using namespace native_backend;
+        using namespace nvb;
         try{
             Router::getInstance()->addRoute(HttpVerb::get, "/i/exist",
                                             std::function<boost::movelib::unique_ptr<Widget>(void)>([](){
                                                 return boost::movelib::unique_ptr<Widget>();
                                             }));
 
-            Router::getInstance()->evalulateRoute(HttpVerb::post, "/i/exist");
+            Router::getInstance()->evaluateRoute(HttpVerb::post, "/i/exist");
         }catch(invalid_route_error e){
             BOOST_ASSERT(true);
             return;
@@ -36,7 +35,7 @@ BOOST_AUTO_TEST_SUITE(routing_Router_tests)
     }
 
     BOOST_AUTO_TEST_CASE( simple_evalulation_test ) {
-        using namespace native_backend;
+        using namespace nvb;
         bool* pModified = new bool(false);
 
         try{
@@ -45,7 +44,7 @@ BOOST_AUTO_TEST_SUITE(routing_Router_tests)
                                                 *pModified = true;
                                                 return boost::movelib::unique_ptr<Widget>();
                                             }));
-            Router::getInstance()->evalulateRoute(HttpVerb::get, "/i/exist");
+            Router::getInstance()->evaluateRoute(HttpVerb::get, "/i/exist");
         }catch(std::exception e){
             BOOST_TEST_MESSAGE(e.what());
             BOOST_ASSERT(false);

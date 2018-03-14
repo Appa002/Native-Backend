@@ -13,7 +13,7 @@
 
 using boost::asio::ip::tcp;
 
-namespace native_backend{
+namespace nvb{
 
     /*!\brief Class for handling tcp/http traffic.
      * This class actually pareses the request of the client to respond accordingly.*/

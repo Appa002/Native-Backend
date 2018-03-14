@@ -7,7 +7,7 @@
 
 #include <string>
 
-namespace native_backend{
+namespace nvb{
     /*!\brief Most generic toString() function, use specialisation to achieve correct behavior.
      * For example see /header/native-backend/server/HttpVerb.h*/
     template <class T>
