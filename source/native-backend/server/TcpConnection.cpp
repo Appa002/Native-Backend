@@ -3,6 +3,8 @@
 //
 
 #include "native-backend/server/TcpConnection.h"
+#include <native-backend/parsing/RequestInformation.h>
+#include <native-backend/routing/Router.h>
 
 /*!\brief Starts reading the request header asynchronously and calls TcpConnection::onRequestRead when done.
  * Called from Server::handle_accept when a client connects.
@@ -67,7 +69,9 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
 
     /*TODO: Get routes from routing*/
     /*TODO: Get HTML from controllers*/
-    std::string html = "<html><body><p>" + request + "</p></body></html>";
+    auto r = nvb::RequestInformation::create(request);
+    auto s = nvb::Router::getInstance()->evaluateRoute(HttpVerb::get, r->path);
+    std::string html = "<html><body>""</body></html>";
 
     std::string message = "HTTP/1.1 200 OK\n"
                                   "Content-length: " + std::to_string(html.size()) + "\n"
