@@ -11,8 +11,6 @@
 #include <native-backend/widget/Widget.h>
 #include <unordered_map>
 #include <boost/move/unique_ptr.hpp>
-#include <native-backend/widget/Widget.h>
-#include <native-backend/parsing/RequestInformation.h>
 
 namespace nvb{
     /*!\brief Used to map functions to certain http requests.*/
