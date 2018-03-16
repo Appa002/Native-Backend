@@ -5,6 +5,7 @@
 #include "native-backend/server/TcpConnection.h"
 #include <native-backend/parsing/RequestInformation.h>
 #include <native-backend/routing/Router.h>
+#include <native-backend/errors/errors.h>
 
 /*!\brief Starts reading the request header asynchronously and calls TcpConnection::onRequestRead when done.
  * Called from Server::handle_accept when a client connects.
@@ -66,17 +67,24 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
     if(request == "TEST TEST TEST\n"){
         return "ONLINE\n";
     }
+    boost::movelib::unique_ptr<nvb::IWidget> topWidget;
+    std::string html;
 
-    /*TODO: Get routes from routing*/
-    /*TODO: Get HTML from controllers*/
-    auto r = nvb::RequestInformation::create(request);
-    auto s = nvb::Router::getInstance()->evaluateRoute(HttpVerb::get, r->path);
-    std::string html = "<html><body>""</body></html>";
+    try {
+        auto requestInformation = nvb::RequestInformation::create(request);
+        topWidget = nvb::Router::getInstance()->evaluateRoute(requestInformation->http_verb, requestInformation->path);
+    }catch (nvb::invalid_route_error& e){
+        topWidget = boost::movelib::unique_ptr<nvb::IWidget>(nullptr);
+        html = "<p>A routing error occurred</p><br/><b>"+ std::string(e.what()) +"</b>";
+    }
+
+    if(topWidget.get() != nullptr)
+        html = topWidget->build("", 0);
 
     std::string message = "HTTP/1.1 200 OK\n"
                                   "Content-length: " + std::to_string(html.size()) + "\n"
-                                  "Content-Type: text/html\n\n" +
-                          html + "\n";
+                                  "Content-Type: text/html\n\n"
+                                  + "<html><body>" + html + "</html></body>" + "\n";
 
     return message;
 }
