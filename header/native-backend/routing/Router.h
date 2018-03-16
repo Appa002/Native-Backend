@@ -17,16 +17,17 @@ namespace nvb{
     class Router : public Singleton<Router> {
     public:
         Router() = default;
-        void addRoute(HttpVerb verb, std::string path, std::function<boost::movelib::unique_ptr<Widget>(void)> builder);
-        boost::movelib::unique_ptr<Widget> evaluateRoute(HttpVerb verb, std::string path);
+        void addRoute(HttpVerb::Verb verb, std::string path, std::function<boost::movelib::unique_ptr<Widget>(void)> builder);
+        boost::movelib::unique_ptr<Widget> evaluateRoute(HttpVerb::Verb verb, std::string path);
     private:
         /*!\brief Member for saving routes.
         Example usage: The path is '/user/index', the http verb is get
          routes_map_.find('/user/index').find(HttpVerb::get) would return the registered function.*/
         std::unordered_map<std::string,
-                std::unordered_map<HttpVerb, std::function<boost::movelib::unique_ptr<Widget>(void)>>> routes_map_;
+                std::unordered_map<HttpVerb::Verb, std::function<boost::movelib::unique_ptr<Widget>(void)>>> routes_map_;
     };
 }
+
 
 
 #endif //NATIVE_BACKEND_ROUTER_H
