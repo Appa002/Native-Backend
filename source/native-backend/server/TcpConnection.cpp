@@ -81,10 +81,15 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
     if(topWidget.get() != nullptr)
         html = topWidget->build("", 0);
 
+
+    //TODO: Fix response code!
+
+    html = "<html><body>" + html + "</body></html>";
+
     std::string message = "HTTP/1.1 200 OK\n"
                                   "Content-length: " + std::to_string(html.size()) + "\n"
                                   "Content-Type: text/html\n\n"
-                                  + "<html><body>" + html + "</html></body>" + "\n";
+                                  + html + "\n";
 
     return message;
 }
