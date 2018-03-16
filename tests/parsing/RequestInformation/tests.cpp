@@ -2,6 +2,8 @@
 #include <boost/test/unit_test.hpp>
 #include <native-backend/parsing/RequestInformation.h>
 
+BOOST_TEST_DONT_PRINT_LOG_VALUE(nvb::HttpVerb::Verb)
+
 BOOST_AUTO_TEST_SUITE(server_RequestInformation_tests)
 
 BOOST_AUTO_TEST_CASE( simple_request_parsing ){
@@ -20,6 +22,7 @@ BOOST_AUTO_TEST_CASE( simple_request_parsing ){
         BOOST_CHECK_EQUAL(info->path, "/test");
         BOOST_CHECK_EQUAL(info->params.at("a"), "1");
         BOOST_CHECK_EQUAL(info->params.at("b"), "2");
+        BOOST_CHECK_EQUAL(info->http_verb, nvb::HttpVerb::Verb::get);
 
     }
 
