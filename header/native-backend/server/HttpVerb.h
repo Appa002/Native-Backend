@@ -5,23 +5,31 @@
 #ifndef NATIVE_BACKEND_HTTPVERB_H
 #define NATIVE_BACKEND_HTTPVERB_H
 
-#include <native-backend/utils/utils.h>
-
 namespace nvb{
-    enum class HttpVerb{
-        get,
-        post
-    };
+    class HttpVerb{
+    public:
+        enum class Verb{
+            get,
+            post
+        };
 
-    template <>
-    std::string toString(HttpVerb obj){
-        switch (obj){
-            case HttpVerb::get:
-                return "GET";
-            case HttpVerb::post:
-                return "POST";
+        static std::string toString(HttpVerb::Verb verb){
+            switch (verb){
+                case (Verb::get):
+                    return "GET";
+                case (Verb::post):
+                    return "POST";
+            }
         }
-    }
+
+        static HttpVerb::Verb stringToHttpVerb(std::string& verb){
+            if(verb == "GET")
+                return Verb::get;
+            if(verb == "POST")
+                return Verb::post;
+        }
+
+    };
 
 }
 
