@@ -8,7 +8,7 @@
 #include <native-backend/utils/Singleton.h>
 #include <functional>
 #include <native-backend/server/HttpVerb.h>
-#include <native-backend/widget/Widget.h>
+#include <native-backend/widgets/IWidget.h>
 #include <unordered_map>
 #include <boost/move/unique_ptr.hpp>
 
@@ -17,14 +17,14 @@ namespace nvb{
     class Router : public Singleton<Router> {
     public:
         Router() = default;
-        void addRoute(HttpVerb::Verb verb, std::string path, std::function<boost::movelib::unique_ptr<Widget>(void)> builder);
-        boost::movelib::unique_ptr<Widget> evaluateRoute(HttpVerb::Verb verb, std::string path);
+        void addRoute(HttpVerb::Verb verb, std::string path, std::function<boost::movelib::unique_ptr<IWidget>(void)> builder);
+        boost::movelib::unique_ptr<IWidget> evaluateRoute(HttpVerb::Verb verb, std::string path);
     private:
         /*!\brief Member for saving routes.
         Example usage: The path is '/user/index', the http verb is get
          routes_map_.find('/user/index').find(HttpVerb::get) would return the registered function.*/
         std::unordered_map<std::string,
-                std::unordered_map<HttpVerb::Verb, std::function<boost::movelib::unique_ptr<Widget>(void)>>> routes_map_;
+                std::unordered_map<HttpVerb::Verb, std::function<boost::movelib::unique_ptr<IWidget>(void)>>> routes_map_;
     };
 }
 
