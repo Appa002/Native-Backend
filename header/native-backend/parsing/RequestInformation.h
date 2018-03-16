@@ -8,18 +8,21 @@
 #include <regex>
 #include <boost/shared_ptr.hpp>
 #include <unordered_map>
+#include <native-backend/server/HttpVerb.h>
 
 namespace nvb{
     /*!\brief Class which parses and holds information about the request.*/
     class RequestInformation {
     private:
-        RequestInformation(std::string &path_, std::unordered_map<std::string, std::string>& params_);
+        RequestInformation(std::string &path_, std::unordered_map<std::string, std::string> &params_,
+                                   nvb::HttpVerb::Verb &verb_);
 
     public:
         static boost::shared_ptr<nvb::RequestInformation> create(std::string& requestString);
 
         const std::unordered_map<std::string, std::string> params;
         const std::string path;
+        const HttpVerb::Verb http_verb;
 
     };
 }
