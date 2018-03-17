@@ -1,10 +1,10 @@
-#define BOOST_TEST_MODULE server_RequestInformation_tests
+#define BOOST_TEST_MODULE parsing_RequestInformation_tests
 #include <boost/test/unit_test.hpp>
 #include <native-backend/parsing/RequestInformation.h>
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE(nvb::HttpVerb::Verb)
 
-BOOST_AUTO_TEST_SUITE(server_RequestInformation_tests)
+BOOST_AUTO_TEST_SUITE(parsing_RequestInformation_tests)
 
 BOOST_AUTO_TEST_CASE( simple_request_parsing ){
     std::string sampleRequest = "GET /test?a=1&b=2 HTTP/1.1\n"
