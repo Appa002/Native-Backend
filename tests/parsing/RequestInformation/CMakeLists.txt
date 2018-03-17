@@ -1,15 +1,15 @@
-project(server_RequestInformation_tests)
+project(parsing_RequestInformation_tests)
 cmake_minimum_required(VERSION 3.0)
 
 set(Boost_ADDITIONAL_VERSIONS "1.66" "1.66.0")
 find_package(Boost 1.66 REQUIRED COMPONENTS unit_test_framework)
 
-add_executable(server_RequestInformation_tests_test_executable tests.cpp)
-target_include_directories(server_RequestInformation_tests_test_executable PRIVATE ${Boost_INCLUDE_DIRS})
-include_directories(server_RequestInformation_tests_test_executable ../../../header)
-target_compile_definitions(server_RequestInformation_tests_test_executable PRIVATE "BOOST_TEST_DYN_LINK=1")
+add_executable(parsing_RequestInformation_tests_test_executable tests.cpp)
+target_include_directories(parsing_RequestInformation_tests_test_executable PRIVATE ${Boost_INCLUDE_DIRS})
+include_directories(parsing_RequestInformation_tests_test_executable ../../../header)
+target_compile_definitions(parsing_RequestInformation_tests_test_executable PRIVATE "BOOST_TEST_DYN_LINK=1")
 
-target_link_libraries(server_RequestInformation_tests_test_executable ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-target_link_libraries(server_RequestInformation_tests_test_executable native-backend)
+target_link_libraries(parsing_RequestInformation_tests_test_executable ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+target_link_libraries(parsing_RequestInformation_tests_test_executable native-backend)
 
-add_test(NAME server_RequestInformation_tests COMMAND server_RequestInformation_tests_test_executable)
+add_test(NAME parsing_RequestInformation_tests COMMAND parsing_RequestInformation_tests_test_executable)
