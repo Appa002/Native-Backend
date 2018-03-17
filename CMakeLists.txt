@@ -24,6 +24,7 @@ target_link_libraries(native-backend ${Boost_REGEX_LIBRARY})
 
 
 add_subdirectory(tests/parsing/RequestInformation)
+add_subdirectory(tests/parsing/TextProcessor)
 
 add_subdirectory(tests/server/Server)
 add_subdirectory(tests/server/TcpConnection)
