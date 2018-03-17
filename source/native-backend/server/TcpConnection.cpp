@@ -84,7 +84,7 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
 
     //TODO: Fix response code!
 
-    html = "<html><body>" + html + "</body></html>";
+    html = "<html style=\"margin: 0; height: 100%; overflow: hidden\"><body style=\"margin: 0; height: 100%; overflow: hidden\">" + html + "</body></html>";
 
     std::string message = "HTTP/1.1 200 OK\n"
                                   "Content-length: " + std::to_string(html.size()) + "\n"
