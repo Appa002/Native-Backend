@@ -6,15 +6,21 @@
 #define NATIVE_BACKEND_INVALID_ROUTE_ERROR_H
 
 #include <stdexcept>
+#include <native-backend/errors/HttpStatusCode.h>
+#include <string_view>
 
 #define ADD_ERROR(name) class name : public std::exception { \
 \
     private: \
-        std::string message; \
+        const std::string message; \
+        const nvb::StatusLiteral statusLiteral;  \
     public: \
-        name (char const* const message) throw() : message(std::string(message)) {}; \
-        name (std::string message) throw() : message(message) {} \
+        name (char const* const message, nvb::StatusLiteral statusLiteral = nvb::HttpStatusCode::status500) throw() : message(std::string(message)), statusLiteral(statusLiteral) {}; \
+        name (std::string message, nvb::StatusLiteral statusLiteral = nvb::HttpStatusCode::status500) throw() : message(message), statusLiteral(statusLiteral) {} \
         virtual char const* what() const throw(){ return message.c_str(); }; \
+        unsigned int statusCode(){ return statusLiteral.code; }\
+        std::string statusText(){ return std::string(statusLiteral.text); }\
+        nvb::StatusWrapper status() {return nvb::StatusWrapper(statusCode(), statusText()); } \
 };
 
 
