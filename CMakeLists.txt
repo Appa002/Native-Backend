@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(Native-Backend VERSION 1.0.0 DESCRIPTION "Library for creating backends in c++")
+set(CMAKE_CXX_STANDARD 17)
+
 enable_testing()
 
 set(Boost_ADDITIONAL_VERSIONS "1.66" "1.66.0")
