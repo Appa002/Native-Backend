@@ -11,6 +11,7 @@
 
 namespace nvb{
 
+
     /*!\brief Literal Type which holds basic information about a status.
      * Holds the status code as \c unsigned int and the text that goes with it as \c std::string_view
      * std::string_view is used because std::string has a none trivial deconstructor.*/
