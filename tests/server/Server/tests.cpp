@@ -9,6 +9,7 @@
 #include <boost/move/unique_ptr.hpp>
 #include <native-backend/widgets/TextWidget.h>
 #include <native-backend/widgets/BlockWidget.h>
+#include <native-backend/errors/HttpStatusCode.h>
 
 using boost::asio::ip::tcp;
 
