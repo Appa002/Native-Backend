@@ -6,6 +6,8 @@
 #include <native-backend/parsing/RequestInformation.h>
 #include <native-backend/routing/Router.h>
 #include <native-backend/errors/errors.h>
+#include <string>
+#include <native-backend/errors/HttpStatusCode.h>
 
 /*!\brief Starts reading the request header asynchronously and calls TcpConnection::onRequestRead when done.
  * Called from Server::handle_accept when a client connects.
@@ -31,7 +33,7 @@ void nvb::TcpConnection::setRef(nvb::TcpConnection::shared_ptr_t shared_ptr_to_t
     this->shared_ptr_to_this_ = shared_ptr_to_this;
 }
 
-/*\brief Returns \c TcpConnection::socket_*/
+/*!\brief Returns \c TcpConnection::socket_*/
 tcp::socket &nvb::TcpConnection::getSocket() {
     return this->socket_;
 }
@@ -69,6 +71,7 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
     }
     boost::movelib::unique_ptr<nvb::IWidget> topWidget;
     std::string html;
+    StatusWrapper status = HttpStatusCode::status200;
 
     try {
         auto requestInformation = nvb::RequestInformation::create(request);
@@ -76,17 +79,15 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
     }catch (nvb::invalid_route_error& e){
         topWidget = boost::movelib::unique_ptr<nvb::IWidget>(nullptr);
         html = "<p>A routing error occurred</p><br/><b>"+ std::string(e.what()) +"</b>";
+        status = e.status();
     }
 
     if(topWidget.get() != nullptr)
         html = topWidget->build("", 0);
 
+    html = R"(<html style="margin: 0; height: 100%; overflow: hidden"><body style="margin: 0; height: 100%; overflow: hidden">)" + html + "</body></html>";
 
-    //TODO: Fix response code!
-
-    html = "<html style=\"margin: 0; height: 100%; overflow: hidden\"><body style=\"margin: 0; height: 100%; overflow: hidden\">" + html + "</body></html>";
-
-    std::string message = "HTTP/1.1 200 OK\n"
+    std::string message = "HTTP/1.1 "+ std::to_string(status.getCode()) +" "+ status.getText() +"\n"
                                   "Content-length: " + std::to_string(html.size()) + "\n"
                                   "Content-Type: text/html\n\n"
                                   + html + "\n";
