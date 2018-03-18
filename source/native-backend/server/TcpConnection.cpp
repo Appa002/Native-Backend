@@ -66,7 +66,7 @@ void nvb::TcpConnection::onRequestRead(const boost::system::error_code &, size_t
 /*!\brief Parses the request to create the response string.
  * The request gets passed to the Routs singleton*/
 std::string nvb::TcpConnection::createResponse(std::string request) {
-    if(request == "TEST TEST TEST\n"){
+    if (request == "TEST TEST TEST\n") {
         return "ONLINE\n";
     }
     boost::movelib::unique_ptr<nvb::IWidget> topWidget;
@@ -74,23 +74,34 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
     StatusWrapper status = HttpStatusCode::status200;
 
     try {
-        auto requestInformation = nvb::RequestInformation::create(request);
-        topWidget = nvb::Router::getInstance()->evaluateRoute(requestInformation->http_verb, requestInformation->path);
-    }catch (nvb::invalid_route_error& e){
+
+        try {
+            auto requestInformation = nvb::RequestInformation::create(request);
+            topWidget = nvb::Router::getInstance()->evaluateRoute(requestInformation->http_verb,
+                                                                  requestInformation->path);
+        } catch (nvb::invalid_route_error &e) {
+            topWidget = boost::movelib::unique_ptr<nvb::IWidget>(nullptr);
+            html = "<p>A routing error occurred</p><br/><b>" + std::string(e.what()) + "</b>";
+            status = e.status();
+        }
+    } catch (nvb::GeneralError &e) {
         topWidget = boost::movelib::unique_ptr<nvb::IWidget>(nullptr);
-        html = "<p>A routing error occurred</p><br/><b>"+ std::string(e.what()) +"</b>";
+        html = "<p>A unknown error occurred</p><br/><b>" + std::string(e.what()) + "</b> <br/> <b>Status Code: " +
+                std::to_string(e.statusCode()) + " " + e.statusText() + "</b>" ;
+
         status = e.status();
     }
 
-    if(topWidget.get() != nullptr)
+    if (topWidget.get() != nullptr)
         html = topWidget->build("", 0);
 
-    html = R"(<html style="margin: 0; height: 100%; overflow: hidden"><body style="margin: 0; height: 100%; overflow: hidden">)" + html + "</body></html>";
+    html = R"(<html style="margin: 0; height: 100%; overflow: hidden"><body style="margin: 0; height: 100%; overflow: hidden">)" +
+           html + "</body></html>";
 
-    std::string message = "HTTP/1.1 "+ std::to_string(status.getCode()) +" "+ status.getText() +"\n"
-                                  "Content-length: " + std::to_string(html.size()) + "\n"
+    std::string message = "HTTP/1.1 " + std::to_string(status.getCode()) + " " + status.getText() + "\n"
+            "Content-length: " + std::to_string(html.size()) + "\n"
                                   "Content-Type: text/html\n\n"
-                                  + html + "\n";
+                          + html + "\n";
 
     return message;
 }
