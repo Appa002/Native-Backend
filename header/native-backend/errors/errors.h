@@ -9,6 +9,10 @@
 #include <native-backend/errors/HttpStatusCode.h>
 #include <string_view>
 
+/*!\brief Macro Used to quickly add custom exception which hold extra information about the http status.
+ * Defines function \c ::statusCode() and \c statusText() which return the number associated with the http status
+ * and return the text associated whith the http status respectively.*/
+
 #define ADD_ERROR(name) class name : public std::exception { \
 \
     private: \
