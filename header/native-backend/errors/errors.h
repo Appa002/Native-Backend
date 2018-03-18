@@ -8,23 +8,56 @@
 #include <stdexcept>
 #include <native-backend/errors/HttpStatusCode.h>
 #include <string_view>
+#include <utility>
 
-/*!\brief Macro Used to quickly add custom exception which hold extra information about the http status.
- * Defines function \c ::statusCode() and \c statusText() which return the number associated with the http status
- * and return the text associated whith the http status respectively.*/
+namespace nvb {
+    /*!brief Exception which holds extra information about the http status.*/
+    class GeneralError : public std::exception {
+    protected:
+        const std::string message;
+        const nvb::StatusLiteral statusLiteral;
+    public:
+        GeneralError() = delete;
 
-#define ADD_ERROR(name) class name : public std::exception { \
+        explicit GeneralError (char const *const message, nvb::StatusLiteral statusLiteral = nvb::HttpStatusCode::status500) throw()
+                            : message(std::string(message)), statusLiteral(std::move(statusLiteral)) {}
+
+        explicit GeneralError (std::string& message, nvb::StatusLiteral statusLiteral = nvb::HttpStatusCode::status500) throw()
+                            : message(std::string(message)), statusLiteral(std::move(statusLiteral))  {}
+
+        explicit GeneralError (std::string&& message, nvb::StatusLiteral statusLiteral = nvb::HttpStatusCode::status500) throw()
+                            : message(std::string(message)), statusLiteral(std::move(statusLiteral))  {}
+
+        char const *what() const throw() override { return message.c_str(); }
+
+        /*!\brief Return the code associated with the http status.
+         * eg. 404 or 200 is returned.*/
+        unsigned int statusCode() { return statusLiteral.code; }
+
+        /*!\brief Return the text associated with the http status.
+         * eg. For 404 "Not found" would be returned,
+         * for 200 "OK" would be returned.*/
+        std::string statusText() { return std::string(statusLiteral.text); }
+
+        /*!\brief Returns a instance of \c nvb::StatusWrapper which holds information about the http status.
+         * eg. if the status is 200 OK \c StatusWrapper::code would equal 200 and \c StatusWrapper::text
+         * would equal "OK".*/
+        nvb::StatusWrapper status() { return nvb::StatusWrapper(statusCode(), statusText()); }
+    };
+}
+
+
+/*!\brief Macro Used to quickly add custom exceptions.*/
+#define ADD_ERROR(name) class name : public nvb::GeneralError { \
+public:\
+                explicit name (char const *const message, nvb::StatusLiteral statusLiteral = nvb::HttpStatusCode::status500) throw() \
+                            : GeneralError(message, statusLiteral) {} \
 \
-    private: \
-        const std::string message; \
-        const nvb::StatusLiteral statusLiteral;  \
-    public: \
-        name (char const* const message, nvb::StatusLiteral statusLiteral = nvb::HttpStatusCode::status500) throw() : message(std::string(message)), statusLiteral(statusLiteral) {}; \
-        name (std::string message, nvb::StatusLiteral statusLiteral = nvb::HttpStatusCode::status500) throw() : message(message), statusLiteral(statusLiteral) {} \
-        virtual char const* what() const throw(){ return message.c_str(); }; \
-        unsigned int statusCode(){ return statusLiteral.code; }\
-        std::string statusText(){ return std::string(statusLiteral.text); }\
-        nvb::StatusWrapper status() {return nvb::StatusWrapper(statusCode(), statusText()); } \
+                explicit name (std::string& message, nvb::StatusLiteral statusLiteral = nvb::HttpStatusCode::status500) throw() \
+                            :  GeneralError(message, statusLiteral) {} \
+\
+                explicit name (std::string&& message, nvb::StatusLiteral statusLiteral = nvb::HttpStatusCode::status500) throw() \
+                            : GeneralError(message, statusLiteral) {} \
 };
 
 
