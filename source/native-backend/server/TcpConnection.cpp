@@ -69,7 +69,7 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
     if (request == "TEST TEST TEST\n") {
         return "ONLINE\n";
     }
-    boost::movelib::unique_ptr<nvb::IWidget> topWidget;
+    boost::shared_ptr<nvb::IWidget> topWidget;
     std::string html;
     StatusWrapper status = HttpStatusCode::status200;
 
