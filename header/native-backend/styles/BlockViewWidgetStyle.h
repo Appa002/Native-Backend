@@ -7,7 +7,7 @@
 
 namespace nvb {
     /*!\brief Class which holds information for styling \c BlockWidget 's.*/
-    class BlockWidgetStyle {
+    class BlockViewWidgetStyle {
     public:
         /*!\brief Type used to define the position to where the \c BlockWidget should float to.*/
         enum class PositionHint{
@@ -29,11 +29,16 @@ namespace nvb {
         const PositionHint vertical_alignment;
 
 
-        explicit BlockWidgetStyle(PositionHint _horizontal_alignment=PositionHint::LEFT,
+        explicit BlockViewWidgetStyle(PositionHint _horizontal_alignment=PositionHint::LEFT,
                         PositionHint _vertical_alignment=PositionHint::TOP) :
                 horizontal_alignment(_horizontal_alignment),
                 vertical_alignment(_vertical_alignment) {}
-        
+
+        static boost::shared_ptr<nvb::BlockViewWidgetStyle> createShared(PositionHint _horizontal_alignment=PositionHint::LEFT,
+                                                                 PositionHint _vertical_alignment=PositionHint::TOP){
+            return boost::shared_ptr<nvb::BlockViewWidgetStyle>(new BlockViewWidgetStyle(_horizontal_alignment, _vertical_alignment));
+        }
+
     };
 }
 
