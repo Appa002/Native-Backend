@@ -12,29 +12,23 @@ namespace nvb{
     /*!\brief Basic Widget which takes no children and shows simple text on screen.*/
     class TextWidget : public IWidget {
     private:
-        const std::string raw_html = "<span style=\"white-space: nowrap\">[INSERT]</span>";
-        const std::string text;
+        const std::string template_html = "<span style=\"white-space: nowrap\">[INSERT]</span>";
+        const std::string generated_html_;
+
+        std::string generateHtml(std::string &text);
+
     public:
-        explicit TextWidget(std::string& text) : text(text) {};
-        explicit TextWidget(std::string&& text) : text(text) {};
+        explicit TextWidget(std::string& text);
+        explicit TextWidget(std::string&& text);
 
-        /*!\brief Injects \c TextWidget::raw_html into the document at position \c pos.*/
-        std::string build(std::string& document, size_t pos) override {
-            size_t pos_change = raw_html.find_first_of("[INSERT]");
-            std::string insert_html = raw_html;
-            insert_html = insert_html.replace(pos_change, 8, "");
-            insert_html = insert_html.insert(pos_change, text);
-            return document.insert(pos, insert_html);
-        }
+        std::string build(std::string& document, size_t pos) override;
+        std::string build(std::string&& document, size_t pos) override;
 
-        /*!\brief Injects \c TextWidget::raw_html into the document at position \c pos.*/
-        std::string build(std::string&& document, size_t pos) override {
-            size_t pos_change = raw_html.find_first_of("[INSERT]");
-            std::string insert_html = raw_html;
-            insert_html = insert_html.replace(pos_change, 8, "");
-            insert_html = insert_html.insert(pos_change, text);
-            return document.insert(pos, insert_html);
-        }
+        size_t contentSize() override;
+
+        static boost::shared_ptr<IWidget> createShared(std::string& text);
+        static boost::shared_ptr<IWidget> createShared(std::string&& text);
+
     };
 }
 
