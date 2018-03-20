@@ -79,7 +79,7 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
             auto requestInformation = nvb::RequestInformation::create(request);
             topWidget = nvb::Router::getInstance()->evaluateRoute(requestInformation->http_verb,
                                                                   requestInformation->path);
-        } catch (nvb::invalid_route_error &e) {
+        } catch (nvb::error::invalid_route_error &e) {
             topWidget = boost::movelib::unique_ptr<nvb::IWidget>(nullptr);
             html = "<p>A routing error occurred</p><br/><b>" + std::string(e.what()) + "</b>";
             status = e.status();
