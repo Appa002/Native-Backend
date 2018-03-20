@@ -8,28 +8,39 @@
 #include <native-backend/widgets/IWidget.h>
 #include <boost/move/unique_ptr.hpp>
 #include <native-backend/widgets/TextWidget.h>
-#include <native-backend/widgets/BlockWidget.h>
+#include <native-backend/widgets/BlockViewWidget.h>
 #include <native-backend/errors/HttpStatusCode.h>
+#include <native-backend/widgets/ListViewWidget.h>
 
 using boost::asio::ip::tcp;
 
 BOOST_AUTO_TEST_SUITE(server_Server_tests)
 
     BOOST_AUTO_TEST_CASE(server_existents_check) {
+        using namespace nvb;
+        nvb::Router::getInstance()->addRoute(nvb::HttpVerb::Verb::get, "/", []() {
 
-        nvb::Router::getInstance()->addRoute(nvb::HttpVerb::Verb::get, "/", [](){
-            return boost::movelib::unique_ptr<nvb::IWidget>(
-                    new nvb::BlockWidget(
-                            new nvb::TextWidget("Hello, World!")
-                          //  new nvb::BlockWidgetStyle(nvb::BlockWidgetStyle::PositionHint::CENTER, nvb::BlockWidgetStyle::PositionHint::TOP)
-                    ));
+            auto myStyle = BlockViewWidgetStyle::createShared(
+                    BlockViewWidgetStyle::PositionHint::CENTER,
+                    BlockViewWidgetStyle::PositionHint::CENTER
+            );
+
+            return BlockViewWidget::createShared()
+                    ->add(ListViewWidget::createShared()
+                                  ->add(TextWidget::createShared("1"))
+                                  ->add(TextWidget::createShared("2"))
+                                  ->add(TextWidget::createShared("Hello, World!"))
+                                  ->generateHtml())
+
+                    ->setProperty({"style", myStyle})
+                    ->generateHtml();
         });
 
         boost::thread t([]() {
             nvb::Server::create(8080);
         });
         /*TODO: Find way to make a tcp request and check the servers response. Similar to how netcat works in bash*/
-       // t.interrupt();
+        // t.interrupt();
         t.join();
     }
 
