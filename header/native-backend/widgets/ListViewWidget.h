@@ -27,21 +27,24 @@ namespace nvb{
                 "<div style=\"display: flex; flex-direction: column;\">"
                 "[INSERT]"
                 "</div>";
-        const std::vector<boost::shared_ptr<IWidget>> children_;
-        const std::string generated_html_;
-        std::string generateHtml();
 
+        std::vector<boost::shared_ptr<IWidget>> children_;
+        bool html_contains_newest_state = false;
+        std::string generated_html_;
     public:
-        explicit ListViewWidget(std::vector<boost::shared_ptr<IWidget>>& children);
-        explicit ListViewWidget(std::vector<boost::shared_ptr<IWidget>>&& children);
+        explicit ListViewWidget() = default;
 
         std::string build(std::string& document, size_t pos) override;
         std::string build(std::string&& document, size_t pos) override;
+        boost::shared_ptr<IWidget> add(boost::shared_ptr<IWidget> widget) override;
+        boost::shared_ptr<IWidget> setProperty(std::pair<std::string, boost::shared_ptr<void>>) override;
+        boost::shared_ptr<IWidget> generateHtml() override;
+        void updateState() override;
 
         size_t contentSize() override;
 
-        static boost::shared_ptr<nvb::IWidget> createShared(std::vector<boost::shared_ptr<IWidget>>& children);
-        static boost::shared_ptr<nvb::IWidget> createShared(std::vector<boost::shared_ptr<IWidget>>&& children);
+
+        static boost::shared_ptr<nvb::IWidget> createShared();
     };
 }
 
