@@ -18,10 +18,10 @@ void nvb::Router::addRoute(nvb::HttpVerb::Verb verb, std::string path,
 boost::shared_ptr<nvb::IWidget>
 nvb::Router::evaluateRoute(nvb::HttpVerb::Verb verb, std::string path) {
     if(routes_map_.find(path) == routes_map_.cend())
-        throw invalid_route_error("No route defined for path: \""+path+"\" with http verb: \""+HttpVerb::toString(verb)+"\"", HttpStatusCode::status404);
+        throw error::invalid_route_error("No route defined for path: \""+path+"\" with http verb: \""+HttpVerb::toString(verb)+"\"", HttpStatusCode::status404);
 
     else if (routes_map_.at(path).find(verb) == routes_map_.at(path).end())
-        throw invalid_route_error("Invalid http verb \""+HttpVerb::toString(verb)+"\" used for route with path: \"" +path+ "\"", HttpStatusCode::status404);
+        throw error::invalid_route_error("Invalid http verb \""+HttpVerb::toString(verb)+"\" used for route with path: \"" +path+ "\"", HttpStatusCode::status404);
 
     return routes_map_.at(path).at(verb)();
 }
