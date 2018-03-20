@@ -33,24 +33,25 @@ namespace nvb{
         const std::string horizontal_buffer_html_ = "<div style=\"width: 100vw\"></div>";
         const std::string vertical_buffer_html_ = "<div style=\"height: 100vh\"></div>";
 
-        const boost::shared_ptr<nvb::IWidget> child_;
-        const boost::shared_ptr<nvb::BlockViewWidgetStyle> style_;
-        const std::string generated_html_ = "";
-
-        std::string generateHtml();
+        boost::shared_ptr<nvb::IWidget> child_;
+        boost::shared_ptr<nvb::BlockViewWidgetStyle> style_;
+        std::string generated_html_ = "";
+        bool html_contains_newest_state = false;
 
     public:
-        explicit BlockViewWidget(boost::shared_ptr<IWidget> child,
-                                 boost::shared_ptr<BlockViewWidgetStyle> style);
+        explicit BlockViewWidget(boost::shared_ptr<BlockViewWidgetStyle> style =
+                                            boost::shared_ptr<BlockViewWidgetStyle>(new BlockViewWidgetStyle()));
 
+        boost::shared_ptr<IWidget> generateHtml() override;
         std::string build(std::string& document, size_t pos) override;
         std::string build(std::string&& document, size_t pos) override;
-
         size_t contentSize() override;
+        void updateState() override;
+        boost::shared_ptr<IWidget> add(boost::shared_ptr<IWidget> widget) override;
+        boost::shared_ptr<IWidget> setProperty(std::pair<std::string, boost::shared_ptr<void>>) override;
 
-        static boost::shared_ptr<IWidget> createShared(boost::shared_ptr<IWidget> child,
-                                                boost::shared_ptr<BlockViewWidgetStyle> style = boost::shared_ptr<BlockViewWidgetStyle>(
-                                                        new BlockViewWidgetStyle()));
+
+        static boost::shared_ptr<IWidget> createShared();
     };
 }
 
