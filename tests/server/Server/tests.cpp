@@ -25,15 +25,18 @@ BOOST_AUTO_TEST_SUITE(server_Server_tests)
                     BlockViewWidgetStyle::PositionHint::CENTER
             );
 
-            return BlockViewWidget::createShared()
-                    ->add(ListViewWidget::createShared()
-                                  ->add(TextWidget::createShared("1"))
-                                  ->add(TextWidget::createShared("2"))
-                                  ->add(TextWidget::createShared("Hello, World!"))
-                                  ->generateHtml())
+            auto view = ListViewWidget::createShared()
+                    ->add(TextWidget::createShared("1"))
+                    ->add(TextWidget::createShared("2"))
+                    ->add(TextWidget::createShared("Hello, World!"));
 
-                    ->setProperty({"style", myStyle})
-                    ->generateHtml();
+            auto out = BlockViewWidget::createShared()
+                    ->add(view)
+                    ->setProperty({"style", myStyle});
+
+            view->updateState();
+            return out;
+
         });
 
         boost::thread t([]() {
