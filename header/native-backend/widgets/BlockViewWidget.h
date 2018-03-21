@@ -46,7 +46,6 @@ namespace nvb{
         std::string build(std::string& document, size_t pos) override;
         std::string build(std::string&& document, size_t pos) override;
         size_t contentSize() override;
-        void updateState() override;
         boost::shared_ptr<IWidget> add(boost::shared_ptr<IWidget> widget) override;
         boost::shared_ptr<IWidget> setProperty(std::pair<std::string, boost::shared_ptr<void>>) override;
 

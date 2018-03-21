@@ -51,10 +51,6 @@ boost::shared_ptr<nvb::IWidget> nvb::ListViewWidget::add(boost::shared_ptr<nvb::
     return getSharedPtrToThis();
 }
 
-void nvb::ListViewWidget::updateState() {
-    html_contains_newest_state = false;
-}
-
 boost::shared_ptr<nvb::IWidget>
 nvb::ListViewWidget::setProperty(std::pair<std::string, boost::shared_ptr<void>>) {
     return getSharedPtrToThis();

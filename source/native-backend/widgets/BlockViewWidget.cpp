@@ -84,10 +84,6 @@ boost::shared_ptr<nvb::IWidget> nvb::BlockViewWidget::add(boost::shared_ptr<nvb:
     return getSharedPtrToThis();
 }
 
-void nvb::BlockViewWidget::updateState() {
-
-}
-
 boost::shared_ptr<nvb::IWidget>
 nvb::BlockViewWidget::setProperty(std::pair<std::string, boost::shared_ptr<void>> pair) {
     if(pair.first == "style"){

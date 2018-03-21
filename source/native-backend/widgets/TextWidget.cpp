@@ -50,10 +50,6 @@ boost::shared_ptr<nvb::IWidget> nvb::TextWidget::add(boost::shared_ptr<nvb::IWid
     throw error::no_child_error("A TextWidget can't take a child!");
 }
 
-void nvb::TextWidget::updateState() {
-
-}
-
 boost::shared_ptr<nvb::IWidget> nvb::TextWidget::setProperty(std::pair<std::string, boost::shared_ptr<void>> pair) {
     return getSharedPtrToThis();
 }
