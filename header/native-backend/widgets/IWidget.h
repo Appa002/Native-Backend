@@ -31,6 +31,8 @@ namespace nvb{
         virtual boost::shared_ptr<IWidget> add(boost::shared_ptr<IWidget>) = 0;
         virtual boost::shared_ptr<IWidget> setProperty(std::pair<std::string, boost::shared_ptr<void>>) = 0;
         virtual boost::shared_ptr<IWidget> generateHtml() = 0;
+         virtual boost::shared_ptr<IWidget> updateAll() = 0;
+
         virtual boost::shared_ptr<IWidget> getParent();
         virtual boost::shared_ptr<IWidget> getSharedPtrToThis();
         virtual boost::shared_ptr<IWidget> updateLeast();
