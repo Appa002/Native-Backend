@@ -31,17 +31,13 @@ namespace nvb{
         virtual boost::shared_ptr<IWidget> add(boost::shared_ptr<IWidget>) = 0;
         virtual boost::shared_ptr<IWidget> setProperty(std::pair<std::string, boost::shared_ptr<void>>) = 0;
         virtual boost::shared_ptr<IWidget> generateHtml() = 0;
-        virtual boost::shared_ptr<IWidget> getParent() { return parent_; };
-        virtual void setParent(boost::shared_ptr<IWidget> p) { parent_ = std::move(p); };
-        virtual boost::shared_ptr<IWidget> getSharedPtrToThis() { return shared_ptr_to_this; };
-        virtual void setSharedPtrToThis(boost::shared_ptr<IWidget> p) { shared_ptr_to_this = std::move(p); };
+        virtual boost::shared_ptr<IWidget> getParent();
+        virtual boost::shared_ptr<IWidget> getSharedPtrToThis();
+        virtual boost::shared_ptr<IWidget> updateLeast();
+        virtual void setParent(boost::shared_ptr<IWidget> p);
+        virtual void setSharedPtrToThis(boost::shared_ptr<IWidget> p);
 
-        virtual boost::shared_ptr<IWidget> updateState() {
-            generateHtml();
-            if(getParent().get() != nullptr)
-                getParent()->updateState();
-            return shared_ptr_to_this;
-        }
+
     };
 }
 
