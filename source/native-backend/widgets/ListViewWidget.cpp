@@ -55,3 +55,12 @@ boost::shared_ptr<nvb::IWidget>
 nvb::ListViewWidget::setProperty(std::pair<std::string, boost::shared_ptr<void>>) {
     return getSharedPtrToThis();
 }
+
+boost::shared_ptr<nvb::IWidget> nvb::ListViewWidget::updateAll() {
+    for(auto& child : children_){
+        child->updateAll();
+    }
+
+    if(children_.size() == 0)
+        updateLeast();
+}

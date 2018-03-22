@@ -93,3 +93,9 @@ nvb::BlockViewWidget::setProperty(std::pair<std::string, boost::shared_ptr<void>
     return getSharedPtrToThis();
 }
 
+boost::shared_ptr<nvb::IWidget> nvb::BlockViewWidget::updateAll() {
+    if(child_.get() == nullptr)
+        updateLeast();
+    else
+        child_->updateAll();
+}

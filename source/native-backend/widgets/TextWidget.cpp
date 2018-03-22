@@ -53,3 +53,7 @@ boost::shared_ptr<nvb::IWidget> nvb::TextWidget::add(boost::shared_ptr<nvb::IWid
 boost::shared_ptr<nvb::IWidget> nvb::TextWidget::setProperty(std::pair<std::string, boost::shared_ptr<void>> pair) {
     return getSharedPtrToThis();
 }
+
+boost::shared_ptr<nvb::IWidget> nvb::TextWidget::updateAll() {
+    updateLeast();
+}

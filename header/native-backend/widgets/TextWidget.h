@@ -23,6 +23,8 @@ namespace nvb{
         size_t contentSize() override;
         boost::shared_ptr<IWidget> add(boost::shared_ptr<IWidget> widget) override;
         boost::shared_ptr<IWidget> setProperty(std::pair<std::string, boost::shared_ptr<void>>) override;
+        boost::shared_ptr<IWidget> updateAll() override;
+
 
         static boost::shared_ptr<IWidget> createShared(std::string& text);
         static boost::shared_ptr<IWidget> createShared(std::string&& text);
