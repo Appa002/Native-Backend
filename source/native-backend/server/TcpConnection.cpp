@@ -30,7 +30,7 @@ nvb::TcpConnection::shared_ptr_t nvb::TcpConnection::create(boost::asio::io_cont
 
 /*!\brief Sets \c TcpConnection::shared_ptr_to_this_*/
 void nvb::TcpConnection::setRef(nvb::TcpConnection::shared_ptr_t shared_ptr_to_this) {
-    this->shared_ptr_to_this_ = shared_ptr_to_this;
+    this->shared_ptr_to_this_ = std::move(shared_ptr_to_this);
 }
 
 /*!\brief Returns \c TcpConnection::socket_*/
@@ -74,20 +74,13 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
     StatusWrapper status = HttpStatusCode::status200;
 
     try {
-
-        try {
-            auto requestInformation = nvb::RequestInformation::create(request);
-            topWidget = nvb::Router::getInstance()->evaluateRoute(requestInformation->http_verb,
-                                                                  requestInformation->path);
-        } catch (nvb::error::invalid_route_error &e) {
-            topWidget = boost::movelib::unique_ptr<nvb::IWidget>(nullptr);
-            html = "<p>A routing error occurred</p><br/><b>" + std::string(e.what()) + "</b>";
-            status = e.status();
-        }
+        auto requestInformation = nvb::RequestInformation::create(request);
+        topWidget = nvb::Router::getInstance()->evaluateRoute(requestInformation->http_verb,
+                                                              requestInformation->path);
     } catch (nvb::GeneralError &e) {
         topWidget = boost::movelib::unique_ptr<nvb::IWidget>(nullptr);
-        html = "<p>A unknown error occurred</p><br/><b>" + std::string(e.what()) + "</b> <br/> <b>Status Code: " +
-                std::to_string(e.statusCode()) + " " + e.statusText() + "</b>" ;
+        html = "<p>A error occurred</p><br/><b>" + std::string(e.what()) + "</b> <br/> <b>Status Code: " +
+               std::to_string(e.statusCode()) + " " + e.statusText() + "</b>";
 
         status = e.status();
     }
