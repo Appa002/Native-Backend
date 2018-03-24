@@ -38,7 +38,7 @@ namespace nvb{
         explicit TextWidget(std::string&& text, boost::shared_ptr<nvb::TextWidgetStyle> style =
                     TextWidgetStyle::createShared());
 
-        const std::string template_html = "<span style=\"white-space: nowrap; font-weight: [WEIGHT]; font-size: [SIZE]; color: [COLOR];\">[INSERT]</span>";
+        const std::string template_html = "<span style=\"white-space: nowrap; font-weight: [WEIGHT]; font-size: [SIZE]; color: [COLOR]; font-family: [FONT];\">[INSERT]</span>";
         std::string generated_html_;
 
     };

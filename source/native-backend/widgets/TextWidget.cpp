@@ -56,9 +56,10 @@ boost::shared_ptr<nvb::IWidget> nvb::TextWidget::generateHtml() {
     std::string colorAsHex( stream.str() );
 
     std::unordered_map<std::string, std::string> replacements;
-    replacements["[WEIGHT]"] = std::to_string(style->getFontWeight());
+    replacements["[WEIGHT]"] = std::to_string(style->getWeight());
     replacements["[SIZE]"] = std::to_string(style->getSize().value) + style->getSize().unit;
     replacements["[COLOR]"] = colorAsHex;
+    replacements["[FONT]"] = style->getFont();
 
     TextProcessor::process(&out, replacements);
     generated_html_ = out;
