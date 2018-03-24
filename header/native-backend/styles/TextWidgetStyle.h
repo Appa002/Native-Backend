@@ -12,11 +12,24 @@
 #include <iomanip>
 
 namespace nvb {
+
+    /*!\brief Holds styling information for \c TextWidget 's.*/
     class TextWidgetStyle {
     private:
+        /*!\brief The Weight of the text.
+         * Must either be 100, 200, 300, 400, 500, 600, 700, 800 or 900.*/
         unsigned int weight_;
+
+        /*!\brief The Color of the text.
+         * Must be in range 0x0 to 0xffffff.*/
         unsigned long color_;
+
+        /*!\brief The size of the text.*/
         UnitValue<unsigned int> size_;
+
+        /*!\brief The font of the text.
+         * Enter like you would in normal css, for instance:
+         * Times New Roman", Times, serif. See https://www.w3schools.com/css/css_font.asp for information.*/
         std::string font_;
 
         TextWidgetStyle(unsigned int font_weight, unsigned long font_color, UnitValue<unsigned int> size,
@@ -33,6 +46,7 @@ namespace nvb {
         unsigned int setWeight(unsigned int weight);
         unsigned int getWeight();
 
+        /*!\brief Sets the color. It's recommended to enter the color as a hex value like 0x2159b2 (this is dark blue).*/
         size_t setColor(unsigned long color);
         size_t getColor();
 
