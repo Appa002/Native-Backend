@@ -17,23 +17,25 @@ nvb::TextWidget::TextWidget(std::string &&text, boost::shared_ptr<nvb::TextWidge
 
 /*!\brief Injects already generated HTML into the document at \c pos.*/
 std::string nvb::TextWidget::build(std::string &document, size_t pos) {
+    if(!conatins_newest_state_)
+        throw error::old_state_error("The TextWidget doesn't contain the newest state.");
     return document.insert(pos, generated_html_);
 }
 /*!\brief Injects already generated HTML into the document at \c pos.*/
 std::string nvb::TextWidget::build(std::string &&document, size_t pos) {
+    if(!conatins_newest_state_)
+        throw error::old_state_error("The TextWidget doesn't contain the newest state.");
     return document.insert(pos, generated_html_);
 }
 
 /*!\brief Returns a \c boost::shared_ptr<IWidget> instance with a newly allocated \c TextWidget.*/
 boost::shared_ptr<nvb::IWidget> nvb::TextWidget::createShared(std::string &text) {
-
     auto sPtr = boost::shared_ptr<nvb::IWidget>(new TextWidget(text));
     sPtr->setSharedPtrToThis(sPtr);
     return sPtr;
 }
 /*!\brief Returns a \c boost::shared_ptr<IWidget> instance with a newly allocated \c TextWidget.*/
 boost::shared_ptr<nvb::IWidget> nvb::TextWidget::createShared(std::string &&text) {
-
     auto sPtr = boost::shared_ptr<nvb::IWidget>(new TextWidget(text));
     sPtr->setSharedPtrToThis(sPtr);
     return sPtr;
@@ -46,6 +48,7 @@ size_t nvb::TextWidget::contentSize() {
 
 /*!\brief Generates the HTML which is going to be injected into the document.*/
 boost::shared_ptr<nvb::IWidget> nvb::TextWidget::generateHtml() {
+    conatins_newest_state_  = true;
     size_t pos_change = template_html.find("[INSERT]");
     std::string out = template_html;
     out.replace(pos_change, 8, "");
@@ -71,6 +74,7 @@ boost::shared_ptr<nvb::IWidget> nvb::TextWidget::add(boost::shared_ptr<nvb::IWid
 }
 
 boost::shared_ptr<nvb::IWidget> nvb::TextWidget::setProperty(std::pair<std::string, boost::shared_ptr<void>> pair) {
+    conatins_newest_state_  = false;
     if(pair.first == "style")
         style = boost::shared_ptr<TextWidgetStyle>((TextWidgetStyle*)pair.second.get());
 

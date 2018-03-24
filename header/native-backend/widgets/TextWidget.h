@@ -40,6 +40,7 @@ namespace nvb{
 
         const std::string template_html = "<span style=\"white-space: nowrap; font-weight: [WEIGHT]; font-size: [SIZE]; color: [COLOR]; font-family: [FONT];\">[INSERT]</span>";
         std::string generated_html_;
+        bool conatins_newest_state_ = false;
 
     };
 }
