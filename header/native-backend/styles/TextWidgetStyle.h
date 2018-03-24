@@ -23,7 +23,6 @@ namespace nvb {
                         std::string font);
 
     public:
-
         static boost::shared_ptr<TextWidgetStyle>
         createShared(unsigned int font_weight = 400,
                      unsigned long font_color = 0x0,
@@ -39,6 +38,9 @@ namespace nvb {
 
         UnitValue<unsigned int> getSize();
         UnitValue<unsigned int> setSize(UnitValue<unsigned int> size);
+
+        std::string getFont();
+        std::string setFont(std::string newFont);
 
     };
 }

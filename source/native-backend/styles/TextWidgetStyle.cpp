@@ -60,4 +60,13 @@ nvb::TextWidgetStyle::createShared(unsigned int font_weight, unsigned long font_
             new TextWidgetStyle(font_weight, font_color, std::move(font_size), std::move(font)));
 
 
+}
+
+std::string nvb::TextWidgetStyle::getFont() {
+    return font_;
+}
+
+std::string nvb::TextWidgetStyle::setFont(std::string newFont) {
+    font_ = newFont;
+    return font_;
 };
