@@ -74,15 +74,20 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
     StatusWrapper status = HttpStatusCode::status200;
 
     try {
-        auto requestInformation = nvb::RequestInformation::create(request);
-        topWidget = nvb::Router::getInstance()->evaluateRoute(requestInformation->http_verb,
-                                                              requestInformation->path);
-    } catch (nvb::GeneralError &e) {
-        topWidget = boost::movelib::unique_ptr<nvb::IWidget>(nullptr);
-        html = "<p>A error occurred</p><br/><b>" + std::string(e.what()) + "</b> <br/> <b>Status Code: " +
-               std::to_string(e.statusCode()) + " " + e.statusText() + "</b>";
+        try {
+            auto requestInformation = nvb::RequestInformation::create(request);
+            topWidget = nvb::Router::getInstance()->evaluateRoute(requestInformation);
+        } catch (nvb::GeneralError &e) {
+            topWidget = boost::movelib::unique_ptr<nvb::IWidget>(nullptr);
+            html = "<p>A error occurred</p><br/><b>" + std::string(e.what()) + "</b> <br/> <b>Status Code: " +
+                   std::to_string(e.statusCode()) + " " + e.statusText() + "</b>";
 
-        status = e.status();
+            status = e.status();
+        }
+    } catch (...) {
+        topWidget = boost::movelib::unique_ptr<nvb::IWidget>(nullptr);
+        html = "<p>A error occurred</p><br/> <b>No further details can be provided.</b> <br/> <b>Status Code: 500 Internal Server Error</b>";
+        status = HttpStatusCode::status500;
     }
 
     if (topWidget.get() != nullptr)
@@ -91,10 +96,9 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
     html = R"(<html style="margin: 0; height: 100%; overflow: hidden"><body style="margin: 0; height: 100%; overflow: hidden">)" +
            html + "</body></html>";
 
-    std::string message = "HTTP/1.1 " + std::to_string(status.getCode()) + " " + status.getText() + "\n"
-            "Content-length: " + std::to_string(html.size()) + "\n"
-                                  "Content-Type: text/html\n\n"
-                          + html + "\n";
+    std::string message = "HTTP/1.1 " + std::to_string(status.getCode()) + " " + status.getText() + "\n" +
+                          "Content-length: " + std::to_string(html.size()) + "\n" +
+                          "Content-Type: text/html\n\n" + html + "\n";
 
     return message;
 }
