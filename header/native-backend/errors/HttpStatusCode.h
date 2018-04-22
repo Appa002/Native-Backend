@@ -6,19 +6,19 @@
 #define NATIVE_BACKEND_HTTPSTATUSCODE_H
 
 #include <string>
-#include <string_view>
 #include <utility>
+#include <native-backend/utils/Types.h>
+#include <string_view>
 
 namespace nvb{
-
     /*!\brief Literal Type which holds basic information about a status.
      * Holds the status code as \c unsigned int and the text that goes with it as \c std::string_view
      * std::string_view is used because std::string has a none trivial deconstructor.*/
     class StatusLiteral{
     public:
-        constexpr StatusLiteral(unsigned int code, std::string_view str) : code(code), text(str) {}
+		constexpr StatusLiteral(unsigned int code, string_view str) : code(code), text(str) {}
         const unsigned int code;
-        const std::string_view text;
+        const string_view text;
     };
 
     /*!\brief Class which holds the same information as \c StatusLiteral but isn't a literal type.
@@ -29,7 +29,7 @@ namespace nvb{
         unsigned int code;
         std::string text;
     public:
-        StatusWrapper(StatusLiteral literal) : code(literal.code), text(std::string(literal.text)) {}
+        StatusWrapper(StatusLiteral literal) : code(literal.code), text(std::string(literal.text.string)) {}
         explicit StatusWrapper(unsigned int code, std::string& str) : code(code), text(std::move(str)) {}
         explicit StatusWrapper(unsigned int code, std::string&& str) : code(code), text(std::move(str)) {}
 
@@ -43,9 +43,9 @@ namespace nvb{
      * which holds the information \c StatusLiteral::code=200 and \c StatusLiteral::text="OK". */
     class HttpStatusCode {
     public:
-        static constexpr StatusLiteral status200 = [](){ return StatusLiteral(200, "OK");}();
-        static constexpr StatusLiteral status404 = [](){ return StatusLiteral(404, "Not Found");}();
-        static constexpr StatusLiteral status500 = [](){ return StatusLiteral(500, "Internal Server Error");}();
+        static constexpr StatusLiteral status200 = StatusLiteral(200, "OK");
+        static constexpr StatusLiteral status404 = StatusLiteral(404, "Not Found");
+        static constexpr StatusLiteral status500 = StatusLiteral(500, "Internal Server Error");
 
     };
 }
