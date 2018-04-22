@@ -93,7 +93,7 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
     if (topWidget.get() != nullptr)
         html = topWidget->build("", 0);
 
-    html = R"(<html style="margin: 0; height: 100%; overflow: hidden"><body style="margin: 0; height: 100%; overflow: hidden">)" +
+    html = R"(<html style="margin: 0; height: 100%; overflow: hidden"><meta charset="utf-8"/><body style="margin: 0; height: 100%; overflow: hidden">)" +
            html + "</body></html>";
 
     std::string message = "HTTP/1.1 " + std::to_string(status.getCode()) + " " + status.getText() + "\n" +
