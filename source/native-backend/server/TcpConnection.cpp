@@ -71,6 +71,7 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
     }
     boost::shared_ptr<nvb::IWidget> topWidget;
     std::string html;
+    std::string js;
     StatusWrapper status = HttpStatusCode::status200;
 
     try {
@@ -90,10 +91,12 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
         status = HttpStatusCode::status500;
     }
 
-    if (topWidget.get() != nullptr)
+    if (topWidget.get() != nullptr){
         html = topWidget->build("", 0);
+        js = topWidget->buildJs("");
+    }
 
-    html = R"(<html style="margin: 0; height: 100%; overflow: hidden"><meta charset="utf-8"/><body style="margin: 0; height: 100%; overflow: hidden">)" +
+    html = R"(<html style="margin: 0; height: 100%; overflow: hidden"><meta charset="utf-8"/><script>)" + js + R"(</script><body style="margin: 0; height: 100%; overflow: hidden">)" +
            html + "</body></html>";
 
     std::string message = "HTTP/1.1 " + std::to_string(status.getCode()) + " " + status.getText() + "\n" +
