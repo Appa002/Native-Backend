@@ -37,6 +37,11 @@ namespace nvb{
 
         boost::shared_ptr<IWidget> updateAll() override;
 
+        /*!\brief Injects required JS into the document.*/
+        std::string buildJs(std::string &document) override;
+        /*!\brief Injects required JS into the document.*/
+        std::string buildJs(std::string &&document) override;
+
         static boost::shared_ptr<nvb::IWidget> createShared(std::string);
 
     };

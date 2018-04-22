@@ -68,3 +68,17 @@ boost::shared_ptr<nvb::IWidget> nvb::RawWidget::createShared(std::string html) {
     ptr->setSharedPtrToThis(ptr);
     return ptr;
 }
+
+std::string nvb::RawWidget::buildJs(std::string &document) {
+    for(auto& child : children_){
+        document += "\n" + child->buildJs(document);
+    }
+    return document;
+}
+
+std::string nvb::RawWidget::buildJs(std::string &&document) {
+    for(auto& child : children_){
+        document += "\n" + child->buildJs(document);
+    }
+    return document;
+}

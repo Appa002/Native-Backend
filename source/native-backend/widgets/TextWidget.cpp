@@ -92,3 +92,11 @@ boost::shared_ptr<nvb::IWidget> nvb::TextWidget::setProperty(std::pair<std::stri
 boost::shared_ptr<nvb::IWidget> nvb::TextWidget::updateAll() {
     updateLeast();
 }
+
+std::string nvb::TextWidget::buildJs(std::string &document) {
+    return "";
+}
+
+std::string nvb::TextWidget::buildJs(std::string &&document) {
+    return "";
+}

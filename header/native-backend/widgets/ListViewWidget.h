@@ -40,6 +40,11 @@ namespace nvb{
         boost::shared_ptr<IWidget> setProperty(std::pair<std::string, boost::shared_ptr<void>>) override;
         boost::shared_ptr<IWidget> generateHtml() override;
         boost::shared_ptr<IWidget> updateAll() override;
+        /*!\brief Injects required JS into the document.*/
+        std::string buildJs(std::string &document) override;
+
+        /*!\brief Injects required JS into the document.*/
+        std::string buildJs(std::string &&document) override;
 
         size_t contentSize() override;
 

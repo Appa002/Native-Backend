@@ -99,3 +99,13 @@ boost::shared_ptr<nvb::IWidget> nvb::BlockViewWidget::updateAll() {
     else
         child_->updateAll();
 }
+
+std::string nvb::BlockViewWidget::buildJs(std::string &document) {
+    document += "\n" + child_->buildJs(document);
+    return document;
+}
+
+std::string nvb::BlockViewWidget::buildJs(std::string &&document) {
+    document += "\n" + child_->buildJs(document);
+    return document;
+}
