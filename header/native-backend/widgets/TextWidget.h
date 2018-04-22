@@ -27,8 +27,8 @@ namespace nvb{
         boost::shared_ptr<IWidget> updateAll() override;
 
 
+        static boost::shared_ptr<IWidget> createShared(std::string text);
         static boost::shared_ptr<IWidget> createShared(std::string& text);
-
         static boost::shared_ptr<IWidget> createShared(std::string&& text);
 
     private:

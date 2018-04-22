@@ -41,6 +41,14 @@ boost::shared_ptr<nvb::IWidget> nvb::TextWidget::createShared(std::string &&text
     return sPtr;
 }
 
+/*!\brief Returns a \c boost::shared_ptr<IWidget> instance with a newly allocated \c TextWidget.*/
+boost::shared_ptr<nvb::IWidget> nvb::TextWidget::createShared(std::string text) {
+    auto sPtr = boost::shared_ptr<nvb::IWidget>(new TextWidget(text));
+    sPtr->setSharedPtrToThis(sPtr);
+    return sPtr;
+}
+
+
 /*!\brief Returns the size of the content that is going to be injected into the document.*/
 size_t nvb::TextWidget::contentSize() {
     return generated_html_.size();
