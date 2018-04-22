@@ -1,8 +1,10 @@
 project(db_DataBaseRecord)
 cmake_minimum_required(VERSION 3.0)
+set(CMAKE_CXX_STANDARD ${GLOBAL_CXX_STANDARD})
 
-set(Boost_ADDITIONAL_VERSIONS "1.64" "1.64.0")
-find_package(Boost 1.64 REQUIRED COMPONENTS unit_test_framework)
+
+set(Boost_ADDITIONAL_VERSIONS "1.58" "1.58.0")
+find_package(Boost 1.58 REQUIRED COMPONENTS unit_test_framework)
 
 add_executable(db_DataBaseRecord_tests_test_executable tests.cpp)
 target_include_directories(db_DataBaseRecord_tests_test_executable PRIVATE ${Boost_INCLUDE_DIRS})

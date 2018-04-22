@@ -1,8 +1,10 @@
 project(server_TcpConnection_tests)
 cmake_minimum_required(VERSION 3.0)
 
-set(Boost_ADDITIONAL_VERSIONS "1.66" "1.66.0")
-find_package(Boost 1.66 REQUIRED COMPONENTS unit_test_framework system)
+set(CMAKE_CXX_STANDARD ${GLOBAL_CXX_STANDARD})
+
+set(Boost_ADDITIONAL_VERSIONS "1.58" "1.58.0")
+find_package(Boost 1.58 REQUIRED COMPONENTS unit_test_framework system)
 
 add_executable(server_TcpConnection_tests_test_executable tests.cpp)
 target_include_directories(server_TcpConnection_tests_test_executable PRIVATE ${Boost_INCLUDE_DIRS})

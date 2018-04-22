@@ -1,8 +1,10 @@
 project(server_server_tests)
 cmake_minimum_required(VERSION 3.0)
 
-set(Boost_ADDITIONAL_VERSIONS "1.66" "1.66.0")
-find_package(Boost 1.66 REQUIRED COMPONENTS unit_test_framework system)
+set(CMAKE_CXX_STANDARD ${GLOBAL_CXX_STANDARD})
+
+set(Boost_ADDITIONAL_VERSIONS ${GLOBAL_BOOST_VERSION} ${GLOBAL_BOOST_ADDITIONAL_VERSION})
+find_package(Boost ${GLOBAL_BOOST_VERSION} REQUIRED COMPONENTS unit_test_framework system)
 
 add_executable(server_server_tests_test_executable tests.cpp)
 target_include_directories(server_server_tests_test_executable PRIVATE ${Boost_INCLUDE_DIRS})

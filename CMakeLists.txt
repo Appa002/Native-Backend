@@ -1,11 +1,19 @@
 cmake_minimum_required(VERSION 3.0)
-project(Native-Backend VERSION 1.0.0 DESCRIPTION "Library for creating backends in c++")
-set(CMAKE_CXX_STANDARD 17)
+project(Native-Backend)
 
+
+set(GLOBAL_CXX_STANDARD "17" CACHE STRING "The CXX Standard use in this project")
+set(GLOBAL_BOOST_VERSION "1.66" CACHE STRING "The Version of Boost used in this Project")
+set(GLOBAL_BOOST_ADDITIONAL_VERSIONS "1.66.0" CACHE STRING "The Additional Version of Boost used in this Project")
+
+
+set(CMAKE_CXX_STANDARD ${GLOBAL_CXX_STANDARD})
 enable_testing()
 
-set(Boost_ADDITIONAL_VERSIONS "1.66" "1.66.0")
-find_package(Boost 1.66 REQUIRED COMPONENTS system thread regex)
+
+set(Boost_ADDITIONAL_VERSIONS ${GLOBAL_BOOST_VERSION} ${GLOBAL_BOOST_ADDITIONAL_VERSIONS})
+set(BOOST_LIBRARYDIR "/usr/local/lib/boost/")
+find_package(Boost ${GLOBAL_BOOST_VERSION} COMPONENTS system thread regex)
 
 FILE(GLOB SOURCE_FILES
         source/native-backend/*/*.cpp)
