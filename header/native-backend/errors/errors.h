@@ -66,6 +66,7 @@ namespace nvb::error {
     ADD_ERROR(no_child_error)
     ADD_ERROR(old_state_error)
     ADD_ERROR(invalid_argument_error)
+    ADD_ERROR(invalid_request_error)
 }
 
 
