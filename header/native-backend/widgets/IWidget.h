@@ -44,6 +44,12 @@ namespace nvb{
          * Use this if you don't have a reference to the widget which state has changed.*/
         virtual boost::shared_ptr<IWidget> updateAll() = 0;
 
+        /*!\brief Injects required JS into the document.*/
+        virtual std::string buildJs(std::string &document) = 0;
+
+        /*!\brief Injects required JS into the document.*/
+        virtual std::string buildJs(std::string &&document) = 0;
+
         /*!\brief Returns the Widgets parrent.*/
         virtual boost::shared_ptr<IWidget> getParent();
 
