@@ -27,14 +27,12 @@ namespace nvb{
         boost::shared_ptr<IWidget> updateAll() override;
 
         /*!\brief Injects required JS into the document.*/
-        std::string buildJs(std::string &document) override;
+        std::string buildJs(std::string &document, boost::shared_ptr<JSBundle> jsBundle) override;
 
         /*!\brief Injects required JS into the document.*/
-        std::string buildJs(std::string &&document) override;
+        std::string buildJs(std::string &&document, boost::shared_ptr<JSBundle> jsBundle) override;
 
         static boost::shared_ptr<IWidget> createShared(std::string text);
-        static boost::shared_ptr<IWidget> createShared(std::string& text);
-        static boost::shared_ptr<IWidget> createShared(std::string&& text);
 
     private:
         explicit TextWidget(std::string& text, boost::shared_ptr<nvb::TextWidgetStyle> style =

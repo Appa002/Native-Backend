@@ -69,16 +69,16 @@ boost::shared_ptr<nvb::IWidget> nvb::RawWidget::createShared(std::string html) {
     return ptr;
 }
 
-std::string nvb::RawWidget::buildJs(std::string &document) {
+std::string nvb::RawWidget::buildJs(std::string &document, boost::shared_ptr<JSBundle> jsBundle) {
     for(auto& child : children_){
-        document += "\n" + child->buildJs(document);
+        document += "\n" + child->buildJs(document, jsBundle);
     }
     return document;
 }
 
-std::string nvb::RawWidget::buildJs(std::string &&document) {
+std::string nvb::RawWidget::buildJs(std::string &&document, boost::shared_ptr<JSBundle> jsBundle) {
     for(auto& child : children_){
-        document += "\n" + child->buildJs(document);
+        document += "\n" + child->buildJs(document, jsBundle);
     }
     return document;
 }

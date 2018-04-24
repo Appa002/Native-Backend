@@ -92,13 +92,13 @@ boost::shared_ptr<nvb::IWidget> nvb::PaperWidget::createShared() {
     return ptr;
 }
 
-std::string nvb::PaperWidget::buildJs(std::string &document) {
-    document += "\n" + child_->buildJs(document);
+std::string nvb::PaperWidget::buildJs(std::string &document, boost::shared_ptr<JSBundle> jsBundle) {
+    document += "\n" + child_->buildJs(document, jsBundle);
     return document;
 }
 
-std::string nvb::PaperWidget::buildJs(std::string &&document) {
-    document += "\n" + child_->buildJs(document);
+std::string nvb::PaperWidget::buildJs(std::string &&document, boost::shared_ptr<JSBundle> jsBundle) {
+    document += "\n" + child_->buildJs(document, jsBundle);
     return document;
 }
 

@@ -59,16 +59,16 @@ boost::shared_ptr<nvb::IWidget> nvb::ContainerWidget::setProperty(std::pair<std:
     return getSharedPtrToThis();
 }
 
-std::string nvb::ContainerWidget::buildJs(std::string &document) {
+std::string nvb::ContainerWidget::buildJs(std::string &document, boost::shared_ptr<JSBundle> jsBundle) {
     for(auto& child : children_){
-        document += "\n" + child->buildJs(document);
+        document += "\n" + child->buildJs(document, jsBundle);
     }
     return document;
 }
 
-std::string nvb::ContainerWidget::buildJs(std::string &&document) {
+std::string nvb::ContainerWidget::buildJs(std::string &&document, boost::shared_ptr<JSBundle> jsBundle) {
     for(auto& child : children_){
-        document += "\n" + child->buildJs(document);
+        document += "\n" + child->buildJs(document, jsBundle);
     }
     return document;
 }
