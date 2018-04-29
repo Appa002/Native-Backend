@@ -48,6 +48,11 @@ boost::shared_ptr<nvb::IWidget> nvb::FormWrapperWidget::generateHtml() {
     std::unordered_map<std::string, std::string> replacements;
     std::string out = template_html;
 
+    const void * address = static_cast<const void*>(this);
+    std::stringstream ss;
+    ss << address;
+    replacements["[ID]"] = ss.str();
+
     replacements["[METHOD]"] = HttpVerb::toString(method);
     replacements["[ACTION]"] = action;
 
@@ -70,7 +75,9 @@ boost::shared_ptr<nvb::IWidget> nvb::FormWrapperWidget::generateHtml() {
     }
 
     TextProcessor::process(&out, replacements);
+
     generated_html_ = out;
+
     return getSharedPtrToThis();
 }
 
