@@ -4,40 +4,40 @@
 
 #include <utility>
 #include <native-backend/errors/errors.h>
-#include "native-backend/widgets/RawWidget.h"
+#include "native-backend/widgets/RawHtmlWidget.h"
 
-nvb::RawWidget::RawWidget(std::string html) : template_html_(std::move(html)){
+nvb::RawHtmlWidget::RawHtmlWidget(std::string html) : template_html_(std::move(html)){
 
 }
 
-std::string nvb::RawWidget::build(std::string & document, size_t pos) {
+std::string nvb::RawHtmlWidget::build(std::string & document, size_t pos) {
     if(!contains_newest_state_)
         throw error::old_state_error("The RawWidget doesn't contain the newest state.");
     return document.insert(pos, generated_html_);
 }
 
-std::string nvb::RawWidget::build(std::string && document, size_t pos) {
+std::string nvb::RawHtmlWidget::build(std::string && document, size_t pos) {
     if(!contains_newest_state_)
         throw error::old_state_error("The RawWidget doesn't contain the newest state.");
     return document.insert(pos, generated_html_);
 }
 
-size_t nvb::RawWidget::contentSize() {
+size_t nvb::RawHtmlWidget::contentSize() {
     return generated_html_.size();
 }
 
-boost::shared_ptr<nvb::IWidget> nvb::RawWidget::add(boost::shared_ptr<nvb::IWidget> w) {
+boost::shared_ptr<nvb::IWidget> nvb::RawHtmlWidget::add(boost::shared_ptr<nvb::IWidget> w) {
     contains_newest_state_  = false;
     children_.push_back(w);
     return getSharedPtrToThis();
 }
 
-boost::shared_ptr<nvb::IWidget> nvb::RawWidget::setProperty(std::pair<std::string, boost::shared_ptr<void>>) {
+boost::shared_ptr<nvb::IWidget> nvb::RawHtmlWidget::setProperty(std::pair<std::string, boost::shared_ptr<void>>) {
     contains_newest_state_  = false;
     return getSharedPtrToThis();
 }
 
-boost::shared_ptr<nvb::IWidget> nvb::RawWidget::generateHtml() {
+boost::shared_ptr<nvb::IWidget> nvb::RawHtmlWidget::generateHtml() {
     contains_newest_state_  = true;
     size_t i = 0;
     size_t pos;
@@ -53,7 +53,7 @@ boost::shared_ptr<nvb::IWidget> nvb::RawWidget::generateHtml() {
     return getSharedPtrToThis();
 }
 
-boost::shared_ptr<nvb::IWidget> nvb::RawWidget::updateAll() {
+boost::shared_ptr<nvb::IWidget> nvb::RawHtmlWidget::updateAll() {
     for(auto& child : children_){
         child->updateAll();
     }
@@ -63,20 +63,20 @@ boost::shared_ptr<nvb::IWidget> nvb::RawWidget::updateAll() {
     return getSharedPtrToThis();
 }
 
-boost::shared_ptr<nvb::IWidget> nvb::RawWidget::createShared(std::string html) {
-    auto ptr = boost::shared_ptr<IWidget>(new RawWidget(std::move(html)));
+boost::shared_ptr<nvb::IWidget> nvb::RawHtmlWidget::createShared(std::string html) {
+    auto ptr = boost::shared_ptr<IWidget>(new RawHtmlWidget(std::move(html)));
     ptr->setSharedPtrToThis(ptr);
     return ptr;
 }
 
-std::string nvb::RawWidget::buildJs(std::string &document, boost::shared_ptr<JSBundle> jsBundle) {
+std::string nvb::RawHtmlWidget::buildJs(std::string &document, boost::shared_ptr<JSBundle> jsBundle) {
     for(auto& child : children_){
         document += "\n" + child->buildJs(document, jsBundle);
     }
     return document;
 }
 
-std::string nvb::RawWidget::buildJs(std::string &&document, boost::shared_ptr<JSBundle> jsBundle) {
+std::string nvb::RawHtmlWidget::buildJs(std::string &&document, boost::shared_ptr<JSBundle> jsBundle) {
     for(auto& child : children_){
         document += "\n" + child->buildJs(document, jsBundle);
     }

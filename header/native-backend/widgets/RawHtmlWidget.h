@@ -13,7 +13,7 @@ namespace nvb{
      * where you want the widget to be inserted. Use the \c add method to add the IWidgets.
      * You can have multiple children, they are inserted in order of being added via \c add.
      * To designate the position for multiple children but more then one [CHILD] token into the html.*/
-    class RawWidget : public IWidget {
+    class RawHtmlWidget : public IWidget {
     private:
         const std::string template_html_;
         std::string generated_html_;
@@ -21,7 +21,7 @@ namespace nvb{
         bool contains_newest_state_ = false;
 
     public:
-        explicit RawWidget(std::string);
+        explicit RawHtmlWidget(std::string);
 
         std::string build(std::string&, size_t) override;
 
