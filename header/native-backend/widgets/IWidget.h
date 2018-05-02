@@ -8,6 +8,7 @@
 #include <boost/move/unique_ptr.hpp>
 #include <string>
 #include <boost/shared_ptr.hpp>
+#include <native-backend/packaging/JSBundle.h>
 
 namespace nvb{
     /*!\brief Interface from which all Widgets inherit.
@@ -44,7 +45,13 @@ namespace nvb{
          * Use this if you don't have a reference to the widget which state has changed.*/
         virtual boost::shared_ptr<IWidget> updateAll() = 0;
 
-        /*!\brief Returns the Widgets parrent.*/
+        /*!\brief Injects required JS into the document.*/
+        virtual std::string buildJs(std::string &document, boost::shared_ptr<JSBundle> jsBundle) = 0;
+
+        /*!\brief Injects required JS into the document.*/
+        virtual std::string buildJs(std::string &&document, boost::shared_ptr<JSBundle> jsBundle) = 0;
+
+        /*!\brief Returns the Widgets parent.*/
         virtual boost::shared_ptr<IWidget> getParent();
 
         /*!\brief Returns a \c boost::shared_ptr<IWidget> which points to the widget's this.*/

@@ -29,19 +29,6 @@ std::string nvb::TextWidget::build(std::string &&document, size_t pos) {
 }
 
 /*!\brief Returns a \c boost::shared_ptr<IWidget> instance with a newly allocated \c TextWidget.*/
-boost::shared_ptr<nvb::IWidget> nvb::TextWidget::createShared(std::string &text) {
-    auto sPtr = boost::shared_ptr<nvb::IWidget>(new TextWidget(text));
-    sPtr->setSharedPtrToThis(sPtr);
-    return sPtr;
-}
-/*!\brief Returns a \c boost::shared_ptr<IWidget> instance with a newly allocated \c TextWidget.*/
-boost::shared_ptr<nvb::IWidget> nvb::TextWidget::createShared(std::string &&text) {
-    auto sPtr = boost::shared_ptr<nvb::IWidget>(new TextWidget(text));
-    sPtr->setSharedPtrToThis(sPtr);
-    return sPtr;
-}
-
-/*!\brief Returns a \c boost::shared_ptr<IWidget> instance with a newly allocated \c TextWidget.*/
 boost::shared_ptr<nvb::IWidget> nvb::TextWidget::createShared(std::string text) {
     auto sPtr = boost::shared_ptr<nvb::IWidget>(new TextWidget(text));
     sPtr->setSharedPtrToThis(sPtr);
@@ -91,4 +78,13 @@ boost::shared_ptr<nvb::IWidget> nvb::TextWidget::setProperty(std::pair<std::stri
 
 boost::shared_ptr<nvb::IWidget> nvb::TextWidget::updateAll() {
     updateLeast();
+    return getSharedPtrToThis();
+}
+
+std::string nvb::TextWidget::buildJs(std::string &document, boost::shared_ptr<JSBundle> jsBundle) {
+    return "";
+}
+
+std::string nvb::TextWidget::buildJs(std::string &&document, boost::shared_ptr<JSBundle> jsBundle) {
+    return "";
 }

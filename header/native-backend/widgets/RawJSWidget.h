@@ -1,9 +1,14 @@
 //
-// Created by albert on 3/24/18.
+// Created by a_mod on 02.05.2018.
 //
 
-#ifndef NATIVE_BACKEND_RAWWIDGET_H
-#define NATIVE_BACKEND_RAWWIDGET_H
+#ifndef NATIVE_BACKEND_RAWJS_H
+#define NATIVE_BACKEND_RAWJS_H
+
+
+//
+// Created by albert on 3/24/18.
+//
 
 #include <native-backend/widgets/IWidget.h>
 
@@ -13,15 +18,15 @@ namespace nvb{
      * where you want the widget to be inserted. Use the \c add method to add the IWidgets.
      * You can have multiple children, they are inserted in order of being added via \c add.
      * To designate the position for multiple children but more then one [CHILD] token into the html.*/
-    class RawWidget : public IWidget {
+    class RawJSWidget : public IWidget {
     private:
-        const std::string template_html_;
-        std::string generated_html_;
+        const std::string javascript;
+        bool contains_newest_state_= false;
         std::vector<boost::shared_ptr<nvb::IWidget>> children_;
-        bool contains_newest_state_ = false;
+        std::string generated_html_;
 
     public:
-        explicit RawWidget(std::string);
+        explicit RawJSWidget(std::string);
 
         std::string build(std::string&, size_t) override;
 
@@ -37,11 +42,15 @@ namespace nvb{
 
         boost::shared_ptr<IWidget> updateAll() override;
 
+        /*!\brief Injects required JS into the document.*/
+        std::string buildJs(std::string &document, boost::shared_ptr<JSBundle> jsBundle) override;
+        /*!\brief Injects required JS into the document.*/
+        std::string buildJs(std::string &&document, boost::shared_ptr<JSBundle> jsBundle) override;
+
         static boost::shared_ptr<nvb::IWidget> createShared(std::string);
 
     };
 }
 
 
-
-#endif //NATIVE_BACKEND_RAWWIDGET_H
+#endif //NATIVE_BACKEND_RAWJS_H

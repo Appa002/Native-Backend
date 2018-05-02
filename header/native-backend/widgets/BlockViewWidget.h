@@ -50,6 +50,11 @@ namespace nvb{
         boost::shared_ptr<IWidget> add(boost::shared_ptr<IWidget> widget) override;
         boost::shared_ptr<IWidget> setProperty(std::pair<std::string, boost::shared_ptr<void>>) override;
 
+        /*!\brief Injects required JS into the document.*/
+        std::string buildJs(std::string &document, boost::shared_ptr<JSBundle> jsBundle) override;
+
+        /*!\brief Injects required JS into the document.*/
+        std::string buildJs(std::string &&document, boost::shared_ptr<JSBundle> jsBundle) override;
 
         static boost::shared_ptr<IWidget> createShared();
     };

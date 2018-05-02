@@ -71,6 +71,7 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
     }
     boost::shared_ptr<nvb::IWidget> topWidget;
     std::string html;
+    std::string js;
     StatusWrapper status = HttpStatusCode::status200;
 
     try {
@@ -90,10 +91,25 @@ std::string nvb::TcpConnection::createResponse(std::string request) {
         status = HttpStatusCode::status500;
     }
 
-    if (topWidget.get() != nullptr)
-        html = topWidget->build("", 0);
+    try {
+        try {
+            if (topWidget.get() != nullptr) {
+                html = topWidget->build("", 0);
+                js = topWidget->buildJs("", boost::shared_ptr<JSBundle>());
+            }
+        } catch (nvb::GeneralError &e) {
+            html = "<p>A error occurred</p><br/><b>" + std::string(e.what()) + "</b> <br/> <b>Status Code: " +
+                   std::to_string(e.statusCode()) + " " + e.statusText() + "</b>";
 
-    html = R"(<html style="margin: 0; height: 100%; overflow: hidden"><meta charset="utf-8"/><body style="margin: 0; height: 100%; overflow: hidden">)" +
+            status = e.status();
+        }
+    } catch (...) {
+        html = "<p>A error occurred</p><br/> <b>No further details can be provided.</b> <br/> <b>Status Code: 500 Internal Server Error</b>";
+        status = HttpStatusCode::status500;
+    }
+
+    html = R"(<html style="margin: 0; height: 100%; overflow: hidden"><meta charset="utf-8"/><script>)" + js +
+           R"(</script><body style="margin: 0; height: 100%; overflow: hidden">)" +
            html + "</body></html>";
 
     std::string message = "HTTP/1.1 " + std::to_string(status.getCode()) + " " + status.getText() + "\n" +

@@ -66,3 +66,17 @@ boost::shared_ptr<nvb::IWidget> nvb::ListViewWidget::updateAll() {
         updateLeast();
     return getSharedPtrToThis();
 }
+
+std::string nvb::ListViewWidget::buildJs(std::string &document, boost::shared_ptr<JSBundle> jsBundle) {
+    for(auto& child : children_){
+        document += "\n" + child->buildJs(document, jsBundle);
+    }
+    return document;
+}
+
+std::string nvb::ListViewWidget::buildJs(std::string &&document, boost::shared_ptr<JSBundle> jsBundle) {
+    for(auto& child : children_){
+        document += "\n" + child->buildJs(document, jsBundle);
+    }
+    return document;
+}
