@@ -41,8 +41,6 @@ add_subdirectory(tests/server/TcpConnection)
 
 add_subdirectory(tests/packaging/Bundle)
 
-add_subdirectory(tests/db/DataBaseRecord)
-
 add_subdirectory(tests/widget/Widget)
 
 add_subdirectory(tests/utils/Singleton)
